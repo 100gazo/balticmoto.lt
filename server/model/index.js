@@ -1,0 +1,6 @@
+export { default as Moto } from './moto.js'
+export { default as TyresNew} from './tyresNew.js'
+export { default as TyresUsed} from './tyresUsed.js'
+export { default as Trips } from './trips.js'
+export { default as Users } from './users.js'
+export { default as Parts } from './parts.js'
