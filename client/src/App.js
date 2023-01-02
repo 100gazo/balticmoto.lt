@@ -5,7 +5,7 @@ import MainContext from './context/MainContext'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer';
 
-import Alert from './components/Alert/Alert'
+// import Alert from './components/Alert/Alert'
 import './App.css';
 
 // Admin
@@ -35,6 +35,12 @@ import AddUsedTyres from './pages/admin/TyresUsed/New';
 import EditUsedTyres from './pages/admin/TyresUsed/Edit';
 
 
+// Public
+import Login from './pages/public/Login';
+import Register from './pages/public/Register';
+
+
+
 const App = () => {
 
   const [userInfo, setUserInfo] = useState({})
@@ -55,30 +61,32 @@ const App = () => {
           <div className='container'>
             <Routes>
               {/* {admin routes} */}
-              {/* {userInfo.role === 1 && */}
-              {/* <Route path="admin"> */}
-                <Route path="admin/moto/new" element={<NewMoto />} />
-                <Route path='admin/moto/edit/:id' element={<EditMoto />} />
-                <Route path='admin/moto/' element={<AdminPannelMoto />} />
-                <Route path='admin/new-parts/new' element={<AddNewPart />} />
-                <Route path='admin/new-parts/' element={<AdminPannelParts />} />
-                <Route path='admin/new-parts/edit/:id' element={<EditNewPart />} />
-               <Route path='admin/used-parts/edit/:id' element={<EditUsedPart/>} />
-               <Route path='admin/used-parts/' element={<AdminPannelPartsUsed/>} />
-               <Route path='admin/used-parts/new' element={<AddUsedPart/>}/>
-               <Route path='admin/trips/' element={<AdminPannelTrips/>}/>
-               <Route path='admin/trips/new' element={<AddTrips/>}/>
-               <Route path='admin/trips/edit/:id' element={<EditTrips/>}/>
-               <Route path='admin/new-tyres/' element={<AdminPannelTyresNew/>}/>
-               <Route path='admin/new-tyres/new' element={<AddNewTyres/>}/>
-               <Route path='admin/new-tyres/edit/:id' element={<EditNewTyres/>}/>
-               <Route path='admin/used-tyres/' element={<AdminPannelTyresUsed/>}/>
-               <Route path='admin/used-tyres/new' element={<AddUsedTyres/>}/>
-               <Route path='admin/used-tyres/edit/:id' element={<EditUsedTyres/>}/>
-
-
-               {/* </Route> */}
+              {userInfo.role === 1 &&
+              <Route path="admin"> 
+                      <Route path="moto/new" element={<NewMoto />} />
+                      <Route path='moto/edit/:id' element={<EditMoto />} />
+                      <Route path='moto/' element={<AdminPannelMoto />} />
+                      <Route path='new-parts/new' element={<AddNewPart />} />
+                      <Route path='new-parts/' element={<AdminPannelParts />} />
+                      <Route path='new-parts/edit/:id' element={<EditNewPart />} />
+                      <Route path='used-parts/edit/:id' element={<EditUsedPart/>} />
+                      <Route path='used-parts/' element={<AdminPannelPartsUsed/>} />
+                      <Route path='used-parts/new' element={<AddUsedPart/>}/>
+                      <Route path='trips/' element={<AdminPannelTrips/>}/>
+                      <Route path='trips/new' element={<AddTrips/>}/>
+                      <Route path='trips/edit/:id' element={<EditTrips/>}/>
+                      <Route path='new-tyres/' element={<AdminPannelTyresNew/>}/>
+                      <Route path='new-tyres/new' element={<AddNewTyres/>}/>
+                      <Route path='new-tyres/edit/:id' element={<EditNewTyres/>}/>
+                      <Route path='used-tyres/' element={<AdminPannelTyresUsed/>}/>
+                      <Route path='used-tyres/new' element={<AddUsedTyres/>}/>
+                      <Route path='used-tyres/edit/:id' element={<EditUsedTyres/>}/>
+              </Route>}
             {/* } */}
+
+            {/* public routes */}
+                <Route path='login' element={<Login/>}/>
+                <Route path='register' element={<Register/>}/>
 
             </Routes>
           </div>

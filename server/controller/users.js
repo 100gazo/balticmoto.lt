@@ -1,61 +1,72 @@
-import express  from 'express'
+import express from 'express'
+import bcrypt from 'bcrypt'
 import db from '../database/connect.js'
+import { registerValidator, loginValidator } from '../middleware/validate.js'
+// import { adminAuth } from '../middleware/auth.js'
 
-const Router = express.Router()
+const router = express.Router()
 
-Router.get('/', async (req, res) => {
-    const options = {}
+router.post('/register', registerValidator, async (req, res) => {
     try {
-        const users = await db.Users.findAll(options)
-        res.json(users)
-    }catch(error) {
-        console.log(error)
-        res.status(500).send('Įvyko klaida');
-    }
+        const userExists = await db.Users.findOne({ 
+            where: { 
+                email: req.body.email 
+            } 
+        })
+        
+        if(userExists) {
+            res.status(401).send('Toks vartotojas jau egzistuoja')
+            return
+        }
 
-})
+        req.body.password = await bcrypt.hash(req.body.password, 10)
 
-Router.get('/single/:id', async (req, res) => {
-    try {
-        const user = await db.Users.findByPk(req.params.id)
-        res.json(user)
-    } catch(error) {
-        console.log(error)
-        res.status(500).send('Objektas nerastas')
-    }
-})
-
-Router.post('/new', async (req, res) => {
-    try {
         await db.Users.create(req.body)
-        res.send('Objektas išsaugotas')
+        res.send('Vartotojas sėkmingai sukurtas')
+
     } catch(error) {
+
         console.log(error)
-        res.status(500).send('Įvyko klaida išsaugant objektą') 
+        res.status(418).send('Įvyko serverio klaida')
     }
 })
 
-Router.put('/edit/:id', async (req, res) => {
-    try{ 
-        const user = await db.Users.findByPk(req.params.id)
-        await user.update(req.body) 
-        res.send('Objektas sėkmingai atnaujintas')
+router.post('/login', loginValidator,  async (req, res) => {
+    try {
+        const user = await db.Users.findOne({ 
+            where: { 
+                email: req.body.email 
+            } 
+        })
+        
+        if(!user) 
+            return res.status(401).send('Toks vartotojas nerastas')
+
+        if(await bcrypt.compare(req.body.password, user.password)) {
+            req.session.loggedin = true
+            req.session.user = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+            res.json({message: 'Prisijungimas sėkmingas', user: req.session.user})
+        } else {
+            res.status(401).send('Nepavyko prisijungti')
+        }
     } catch(error) {
         console.log(error)
-        res.status(500).send('Įvyko klaida atnaujinant objektą') 
+        res.status(418).send('Įvyko serverio klaida')
     }
 })
 
-Router.delete('/delete/:id', async (req, res) => {
-    try{ 
-        const user = await db.Users.findByPk(req.params.id)
-        await user.destroy() 
-        res.send('Objektas sėkmingai ištrintas')
-    } catch(error) {
-        console.log(error)
-        res.status(500).send('Įvyko klaida ištrinant objektą') 
-    }
+router.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.send('Jūs sėkmingai atsijungėte, lauksime sugrįžtant :)')
 })
 
+router.get('/check-auth',  async (req, res) => {
+    res.json(req.session.user)
+})
 
-export default Router
+export default router
