@@ -24,7 +24,7 @@ const Parts = (sequelize) => {
             allowNull: false
         }
     }
-    return sequelize.define('parts', Schema);
+    return sequelize.define('partsNew', Schema);
 }
 
 export default Parts

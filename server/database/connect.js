@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import mysql from 'mysql2/promise'
-import { Moto, TyresNew, TyresUsed, Trips, Users, Parts } from '../model/index.js'
+import { Moto, TyresNew, TyresUsed, Trips, Users, PartsNew, PartsUsed } from '../model/index.js'
 
 const database ={}
 const credentials = {
@@ -21,12 +21,13 @@ try{
 
         const sequelize = new Sequelize(credentials.database, credentials.user, credentials.password,{ dialect: 'mysql'})
 
-        database.Moto = Moto(sequelize)
+        database.Motos = Moto(sequelize)
         database.TyresNew = TyresNew(sequelize)
         database.TyresUsed = TyresUsed(sequelize)
         database.Trips = Trips(sequelize)
         database.Users  = Users(sequelize)
-        database.Parts  = Parts(sequelize)
+        database.PartsNew  = PartsNew(sequelize)
+        database.PartsUsed  = PartsUsed(sequelize)
 
         await sequelize.sync({alter: true})
 

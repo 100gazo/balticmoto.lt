@@ -6,8 +6,8 @@ const Router = express.Router()
 Router.get('/', async (req, res) => {
     const options = {}
     try {
-        const moto = await db.Motos.findAll(options)
-        res.json(moto)
+        const part = await db.PartsUsed.findAll(options)
+        res.json(part)
     }catch(error) {
         console.log(error)
         res.status(500).send('Įvyko klaida');
@@ -17,8 +17,8 @@ Router.get('/', async (req, res) => {
 
 Router.get('/single/:id', async (req, res) => {
     try {
-        const moto = await db.Motos.findByPk(req.params.id)
-        res.json(moto)
+        const part = await db.PartsUsed.findByPk(req.params.id)
+        res.json(part)
     } catch(error) {
         console.log(error)
         res.status(500).send('Objektas nerastas')
@@ -27,7 +27,7 @@ Router.get('/single/:id', async (req, res) => {
 
 Router.post('/new', async (req, res) => {
     try {
-        await db.Motos.create(req.body)
+        await db.PartsUsed.create(req.body)
         res.send('Objektas išsaugotas')
     } catch(error) {
         console.log(error)
@@ -37,8 +37,8 @@ Router.post('/new', async (req, res) => {
 
 Router.put('/edit/:id', async (req, res) => {
     try{ 
-        const moto = await db.Motos.findByPk(req.params.id)
-        await moto.update(req.body) 
+        const part = await db.PartsUsed.findByPk(req.params.id)
+        await part.update(req.body) 
         res.send('Objektas sėkmingai atnaujintas')
     } catch(error) {
         console.log(error)
@@ -48,8 +48,8 @@ Router.put('/edit/:id', async (req, res) => {
 
 Router.delete('/delete/:id', async (req, res) => {
     try{ 
-        const moto = await db.Motos.findByPk(req.params.id)
-        await moto.destroy() 
+        const part = await db.PartsUsed.findByPk(req.params.id)
+        await part.destroy() 
         res.send('Objektas sėkmingai ištrintas')
     } catch(error) {
         console.log(error)

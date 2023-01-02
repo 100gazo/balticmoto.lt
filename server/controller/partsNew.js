@@ -6,7 +6,7 @@ const Router = express.Router()
 Router.get('/', async (req, res) => {
     const options = {}
     try {
-        const part = await db.Parts.findAll(options)
+        const part = await db.PartsNew.findAll(options)
         res.json(part)
     }catch(error) {
         console.log(error)
@@ -17,7 +17,7 @@ Router.get('/', async (req, res) => {
 
 Router.get('/single/:id', async (req, res) => {
     try {
-        const part = await db.Parts.findByPk(req.params.id)
+        const part = await db.PartsNew.findByPk(req.params.id)
         res.json(part)
     } catch(error) {
         console.log(error)
@@ -27,7 +27,7 @@ Router.get('/single/:id', async (req, res) => {
 
 Router.post('/new', async (req, res) => {
     try {
-        await db.Parts.create(req.body)
+        await db.PartsNew.create(req.body)
         res.send('Objektas išsaugotas')
     } catch(error) {
         console.log(error)
@@ -37,7 +37,7 @@ Router.post('/new', async (req, res) => {
 
 Router.put('/edit/:id', async (req, res) => {
     try{ 
-        const part = await db.Parts.findByPk(req.params.id)
+        const part = await db.PartsNew.findByPk(req.params.id)
         await part.update(req.body) 
         res.send('Objektas sėkmingai atnaujintas')
     } catch(error) {
@@ -48,7 +48,7 @@ Router.put('/edit/:id', async (req, res) => {
 
 Router.delete('/delete/:id', async (req, res) => {
     try{ 
-        const part = await db.Parts.findByPk(req.params.id)
+        const part = await db.PartsNew.findByPk(req.params.id)
         await part.destroy() 
         res.send('Objektas sėkmingai ištrintas')
     } catch(error) {

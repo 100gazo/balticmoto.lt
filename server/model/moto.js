@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 const Moto = (sequelize) => {
     const Schema = {
         price:  {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: true
         },
         marke: {
@@ -16,7 +16,7 @@ const Moto = (sequelize) => {
             allowNull: false
         },
         year: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         engine: {

@@ -15,6 +15,10 @@ const Users = (sequelize) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        userRole: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     }
     return sequelize.define('users', Schema);

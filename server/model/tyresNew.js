@@ -59,10 +59,6 @@ const TyresNew = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        purpose: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         type: {
             type: DataTypes.STRING,
             allowNull: false

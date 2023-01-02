@@ -1,7 +1,7 @@
 import express  from 'express'
 import cors from 'cors'
 import session from 'express-session'
-import  { Moto, TyresNew, TyresUsed, Trips, Users , Parts }  from './controller/index.js'
+import  { Moto, TyresNew, TyresUsed, Trips, Users , PartsNew, PartsUsed }  from './controller/index.js'
 
 const app = express()
 
@@ -21,11 +21,12 @@ app.use(session({
 }))
 
 app.use('/api/moto/', Moto)
-app.use('/api/tyres/new', TyresNew)
-app.use('/api/tyres/used', TyresUsed)
+app.use('/api/new-tyres', TyresNew)
+app.use('/api/used-tyres', TyresUsed)
 app.use('/api/trips/', Trips)
 app.use('/api/users/', Users)
-app.use('/api/parts/', Parts)
+app.use('/api/new-parts/', PartsNew)
+app.use('/api/used-parts/', PartsUsed)
 
 
 app.listen(3000)
